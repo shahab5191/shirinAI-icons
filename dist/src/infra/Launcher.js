@@ -10,7 +10,8 @@ const dataStack = new DataStack_1.DataStack(app, "DataStack");
 const lambdaStack = new lambdaStack_1.LambdaStack(app, "LambdaStack", {
     shirinAITable: dataStack.shirinAITable,
 });
-new AuthStack_1.AuthStack(app, 'AuthStack');
+const authStack = new AuthStack_1.AuthStack(app, 'AuthStack');
 new GatewayStack_1.GatewayStack(app, "GatewayStack", {
     helloLambdaIntegration: lambdaStack.helloLambdaIntegration,
+    userPool: authStack.userPool
 });
