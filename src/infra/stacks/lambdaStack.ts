@@ -20,7 +20,7 @@ export class LambdaStack extends Stack {
     const helloLambda = new NodejsFunction(this, "HelloLambda", {
       runtime: Runtime.NODEJS_20_X,
       handler: "handler",
-      entry: join(__dirname, "..", "..", "services", "hello.ts"),
+      entry: join(__dirname, "..", "..", "services", "icon-gen.js"),
       environment: {
         TABLE_NAME: props.shirinAITable.tableName,
       },
@@ -29,8 +29,13 @@ export class LambdaStack extends Stack {
     helloLambda.addToRolePolicy(
       new PolicyStatement({
         effect: Effect.ALLOW,
-        actions: ["s3:ListAllMyBuckets", "s3:ListBucket"],
-        resources: ["*"],
+        actions: [
+          'Dynamodb:PutItem',
+          'Dynamodb:DeleteItem',
+          'Dynamodb:UpdateItem',
+          'Dynamodb:Scan'
+        ],
+        resources: [props.shirinAITable.tableArn],
       })
     );
 

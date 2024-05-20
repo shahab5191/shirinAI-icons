@@ -2,13 +2,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "type": "pwa-node",
             "request": "launch",
-            "name": "Debug local file",
-            "runtimeArgs": ["-r", "ts-node/register"],
-            "args": ["${relativeFile}"],
+            "name": "Debug current file",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register"
+            ],
+            "args": [
+                "${relativeFile}"
+            ],
             "env": {
-                "AWS_REGION": "eu-west-1"
+                "AWS_REGION": "us-west-2",
+                "TABLE_NAME": "shiriAIStack-065b769e61e5"
             }
         }
     ]

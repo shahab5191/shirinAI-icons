@@ -12,5 +12,8 @@ export class GatewayStack extends Stack {
     const api = new RestApi(this, 'shirinAIApi')
     const shirinResource = api.root.addResource('shirinAI')
     shirinResource.addMethod('GET', props.helloLambdaIntegration)
+    shirinResource.addMethod('POST', props.helloLambdaIntegration)
+    shirinResource.addMethod('PATCH', props.helloLambdaIntegration)
+    shirinResource.addMethod('DELETE', props.helloLambdaIntegration)
   }
 }
