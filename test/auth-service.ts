@@ -1,4 +1,4 @@
-import { signIn, getCurrentUser, AuthError } from "@aws-amplify/auth";
+import { signIn, getCurrentUser, signUp, SignInInput } from "@aws-amplify/auth";
 import { Amplify } from "aws-amplify";
 
 Amplify.configure({
@@ -10,20 +10,43 @@ Amplify.configure({
     },
 });
 
+type SignUpParameters = {
+    username: string;
+    password: string;
+    email: string;
+};
+
 export class AuthService {
-    public async login(username: string, password: string) {
+    public async login({ username, password }: SignInInput) {
         try {
             const { isSignedIn, nextStep } = await signIn({
                 username,
                 password,
-                options: {
-                    authFlowType: "USER_PASSWORD_AUTH",
-                },
+                options: { authFlowType: "USER_PASSWORD_AUTH" },
             });
             console.log(isSignedIn);
             return isSignedIn;
         } catch (error: any) {
             console.log("error sign in", error.underlyingError);
+        }
+    }
+
+    public async signup({ username, password, email }: SignUpParameters) {
+        try {
+            const { isSignUpComplete, userId, nextStep } = await signUp({
+                username,
+                password,
+                options: {
+                    userAttributes: {
+                        email,
+                    },
+                    autoSignIn: true,
+                },
+            });
+
+            console.log(userId);
+        } catch (error) {
+            console.log(error);
         }
     }
 
